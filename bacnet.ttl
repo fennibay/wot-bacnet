@@ -162,7 +162,7 @@ bacnet:hasContextTags rdf:type owl:DatatypeProperty ;
 
 bacnet:EnumMap rdf:type owl:Class .
 
-bacnet:id rdf:type owl:ObjectProperty ;
+bacnet:id rdf:type rdf:Property ;
           rdfs:domain bacnet:EnumMap ;
           rdfs:range [owl:unionOf (owl:NamedIndividual xsd:string)] . # xsd:string is to be used for User-Designated Strings
 
