@@ -184,8 +184,8 @@ bacnet:CommandPriority rdf:type jsonschema:DataSchema ;
                        jsonschema:enum bacnet:CommandPrio1, bacnet:CommandPrio2, bacnet:CommandPrio3, bacnet:CommandPrio4,
                                        bacnet:CommandPrio5, bacnet:CommandPrio7, bacnet:CommandPrio8, bacnet:CommandPrio9,
                                        bacnet:CommandPrio10, bacnet:CommandPrio11, bacnet:CommandPrio12, bacnet:CommandPrio13,
-                                       bacnet:CommandPrio14, bacnet:CommandPrio15 ;
-                       jsonschema:default bacnet:CommandPrio15 ;
+                                       bacnet:CommandPrio14, bacnet:CommandPrio15, bacnet:CommandPrio16 ;
+                       jsonschema:default bacnet:CommandPrio16 ;    # Default priority for writing is 16, ref. ASHRAE 135-2020 BACnet 15.9.1.1.5 Priority
                        bacnet:hasEnumMap [ bacnet:id bacnet:CommandPrio1 ; bacnet:nr 1 ],
                                          [ bacnet:id bacnet:CommandPrio2 ; bacnet:nr 2 ] ,
                                          [ bacnet:id bacnet:CommandPrio3 ; bacnet:nr 3 ] ,
@@ -200,6 +200,7 @@ bacnet:CommandPriority rdf:type jsonschema:DataSchema ;
                                          [ bacnet:id bacnet:CommandPrio13 ; bacnet:nr 13 ] ,
                                          [ bacnet:id bacnet:CommandPrio14 ; bacnet:nr 14 ] ,
                                          [ bacnet:id bacnet:CommandPrio15 ; bacnet:nr 15 ] ;
+                                         [ bacnet:id bacnet:CommandPrio16 ; bacnet:nr 16 ] ;
                        rdfs:seeAlso "ASHRAE 135-2020 BACnet 19.2 Command Prioritization" .
 
 bacnet:CommandPrio1 rdf:type owl:NamedIndividual ;
@@ -233,5 +234,7 @@ bacnet:CommandPrio12 rdf:type owl:NamedIndividual .
 bacnet:CommandPrio13 rdf:type owl:NamedIndividual .
 
 bacnet:CommandPrio14 rdf:type owl:NamedIndividual .
+
+bacnet:CommandPrio15 rdf:type owl:NamedIndividual .
 
 bacnet:CommandPrio15 rdf:type owl:NamedIndividual .
