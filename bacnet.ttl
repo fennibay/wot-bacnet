@@ -68,7 +68,7 @@ Not mapped yet:
 - td:subscribeEvent, td:unsubscribeEvent
 - td:readAllProperties, td:writeAllProperties, td:readMultipleProperties, td:writeMultipleProperties, td:observeAllProperties, td:unobserveAllProperties
 """@en .
-                  
+
 bacnet:covIncrement rdf:type owl:DatatypeProperty ;
                     rdfs:domain hctl:Form ;
                     rdfs:range xsd:float ;
@@ -160,81 +160,37 @@ bacnet:hasContextTags rdf:type owl:DatatypeProperty ;
                       rdfs:domain [owl:unionOf (bacnet:Sequence bacnet:Choice) ];
                       rdfs:range xsd:boolean .
 
-bacnet:EnumMap rdf:type owl:Class .
+bacnet:ValueMap rdf:type owl:Class .
 
-bacnet:id rdf:type rdf:Property ;
-          rdfs:domain bacnet:EnumMap ;
-          rdfs:range [owl:unionOf (owl:NamedIndividual xsd:string)] . # xsd:string is to be used for User-Designated Strings
+bacnet:ValueMapEntry rdf:type owl:Class .
 
-bacnet:nr rdf:type owl:DatatypeProperty ;
-          rdfs:domain bacnet:EnumMap ;
-          rdfs:range xsd:integer .
+bacnet:hasMapEntry rdf:type owl:ObjectProperty ;
+                   rdfs:domain bacnet:ValueMap ;
+                   rdfs:range bacnet:ValueMapEntry .
 
-bacnet:hasEnumMap rdf:type owl:ObjectProperty ;
-                  rdfs:domain [owl:unionOf (bacnet:Boolean bacnet:Enumerated bacnet:Unsigned bacnet:BitString jsonschema:DataSchema)] ;
-                  rdfs:range bacnet:EnumMap .
+bacnet:logicalVal rdf:type owl:DatatypeProperty ;
+                  rdfs:domain bacnet:ValueMapEntry ;
+                  rdfs:range [owl:unionOf (xsd:integer xsd:string xsd:boolean)] .
+
+bacnet:protocolVal rdf:type rdf:type owl:DatatypeProperty ;
+                   rdfs:domain bacnet:ValueMapEntry ;
+                   rdfs:range xsd:integer .
+
+
+bacnet:hasValueMap rdf:type owl:ObjectProperty ;
+                   rdfs:domain [owl:unionOf (bacnet:Boolean bacnet:Enumerated bacnet:Unsigned bacnet:BitString)] ;
+                   rdfs:range bacnet:ValueMap .
 
 #################################################################
 #    Commanding (Priority array) properties definitions
 # Based on ASHRAE 135-2020 BACnet 19.2 Command Prioritization
+# This can be used for instance for a URI Variable for writeproperty
 #################################################################
 
-bacnet:CommandPriority rdf:type jsonschema:DataSchema ;
+bacnet:CommandPriority rdf:type jsonschema:IntegerSchema ;
                        td:name "bacnetCmdPrio" ;
-                       jsonschema:enum bacnet:CommandPrio1, bacnet:CommandPrio2, bacnet:CommandPrio3, bacnet:CommandPrio4,
-                                       bacnet:CommandPrio5, bacnet:CommandPrio7, bacnet:CommandPrio8, bacnet:CommandPrio9,
-                                       bacnet:CommandPrio10, bacnet:CommandPrio11, bacnet:CommandPrio12, bacnet:CommandPrio13,
-                                       bacnet:CommandPrio14, bacnet:CommandPrio15, bacnet:CommandPrio16 ;
-                       jsonschema:default bacnet:CommandPrio16 ;    # Default priority for writing is 16, ref. ASHRAE 135-2020 BACnet 15.9.1.1.5 Priority
-                       bacnet:hasEnumMap [ bacnet:id bacnet:CommandPrio1 ; bacnet:nr 1 ],
-                                         [ bacnet:id bacnet:CommandPrio2 ; bacnet:nr 2 ] ,
-                                         [ bacnet:id bacnet:CommandPrio3 ; bacnet:nr 3 ] ,
-                                         [ bacnet:id bacnet:CommandPrio4 ; bacnet:nr 4 ] ,
-                                         [ bacnet:id bacnet:CommandPrio5 ; bacnet:nr 5 ] ,
-                                         [ bacnet:id bacnet:CommandPrio7 ; bacnet:nr 7 ] ,
-                                         [ bacnet:id bacnet:CommandPrio8 ; bacnet:nr 8 ] ,
-                                         [ bacnet:id bacnet:CommandPrio9 ; bacnet:nr 9 ] ,
-                                         [ bacnet:id bacnet:CommandPrio10 ; bacnet:nr 10 ] ,
-                                         [ bacnet:id bacnet:CommandPrio11 ; bacnet:nr 11 ] ,
-                                         [ bacnet:id bacnet:CommandPrio12 ; bacnet:nr 12 ] ,
-                                         [ bacnet:id bacnet:CommandPrio13 ; bacnet:nr 13 ] ,
-                                         [ bacnet:id bacnet:CommandPrio14 ; bacnet:nr 14 ] ,
-                                         [ bacnet:id bacnet:CommandPrio15 ; bacnet:nr 15 ] ;
-                                         [ bacnet:id bacnet:CommandPrio16 ; bacnet:nr 16 ] ;
+                       # Prio 6 is reserved for minimum on off by BACnet, see clause 19.2.3 Minimum_On_Time and Minimum_Off_Time
+                       jsonschema:enum 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ;
+                       # Default priority for writing is 16, ref. ASHRAE 135-2020 BACnet 15.9.1.1.5 Priority
+                       jsonschema:default 16 ;    
                        rdfs:seeAlso "ASHRAE 135-2020 BACnet 19.2 Command Prioritization" .
-
-bacnet:CommandPrio1 rdf:type owl:NamedIndividual ;
-                    rdfs:label "Manual-Life Safety"@en .
-
-bacnet:CommandPrio2 rdf:type owl:NamedIndividual ;
-                    rdfs:label "Automatic-Life Safety"@en .
-
-bacnet:CommandPrio3 rdf:type owl:NamedIndividual .
-
-bacnet:CommandPrio4 rdf:type owl:NamedIndividual .
-
-bacnet:CommandPrio5 rdf:type owl:NamedIndividual ;
-                    rdfs:label "Critical Equipment Control"@en .
-
-# Prio 6 is reserved for minimum on off by BACnet, see clause 19.2.3 Minimum_On_Time and Minimum_Off_Time
-
-bacnet:CommandPrio7 rdf:type owl:NamedIndividual .
-
-bacnet:CommandPrio8 rdf:type owl:NamedIndividual ;
-                    rdfs:label "Manual Operator"@en .
-
-bacnet:CommandPrio9 rdf:type owl:NamedIndividual .
-
-bacnet:CommandPrio10 rdf:type owl:NamedIndividual .
-
-bacnet:CommandPrio11 rdf:type owl:NamedIndividual .
-
-bacnet:CommandPrio12 rdf:type owl:NamedIndividual .
-
-bacnet:CommandPrio13 rdf:type owl:NamedIndividual .
-
-bacnet:CommandPrio14 rdf:type owl:NamedIndividual .
-
-bacnet:CommandPrio15 rdf:type owl:NamedIndividual .
-
-bacnet:CommandPrio15 rdf:type owl:NamedIndividual .
